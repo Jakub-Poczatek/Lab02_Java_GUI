@@ -84,7 +84,7 @@ public class JavaGUI {
                         textZip.setText(zip);
                     }
                 } catch (Exception e) {
-                    System.out.print(e);
+                    System.out.println(e);
                 }
             }
         });
@@ -109,7 +109,7 @@ public class JavaGUI {
                         textZip.setText(zip);
                     }
                 } catch (Exception e) {
-                    System.out.print(e);
+                    System.out.println(e);
                 }
             }
         });
@@ -130,8 +130,23 @@ public class JavaGUI {
                             "VALUES ('" + id + "','" + name + "','" + street + "','" + city + "','" + state + "','" + zip + "')");
 
                     rs=finalSt.executeQuery("SELECT * FROM data");
+                    if(rs.next()){
+                        id=rs.getInt("id");
+                        name = rs.getString("name");
+                        street = rs.getString("street");
+                        city = rs.getString("city");
+                        state = rs.getString("state");
+                        zip = rs.getString("zip");
+
+                        textId.setText(String.valueOf(id));
+                        textName.setText(name);
+                        textStreet.setText(street);
+                        textCity.setText(city);
+                        textState.setText(state);
+                        textZip.setText(zip);
+                    }
                 } catch (Exception e) {
-                    System.out.print(e);
+                    System.out.println(e);
                 }
             }
         });
@@ -140,9 +155,63 @@ public class JavaGUI {
         buttonDelete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 try{
-                    //finalSt.executeUpdate("DELETE FROM `data` WHERE id=" + id);
-                } catch (Exception e) {
+                    finalSt.executeUpdate("DELETE FROM `data` WHERE id=" + id);
+                    rs=finalSt.executeQuery("SELECT * FROM data");
+                    if(rs.next()){
+                        id=rs.getInt("id");
+                        name = rs.getString("name");
+                        street = rs.getString("street");
+                        city = rs.getString("city");
+                        state = rs.getString("state");
+                        zip = rs.getString("zip");
 
+                        textId.setText(String.valueOf(id));
+                        textName.setText(name);
+                        textStreet.setText(street);
+                        textCity.setText(city);
+                        textState.setText(state);
+                        textZip.setText(zip);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        });
+
+        p.add(buttonUpdate);
+        buttonUpdate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                try{
+                    int currentId = id;
+                    id = Integer.parseInt(textId.getText());
+                    name = textName.getText();
+                    street = textStreet.getText();
+                    city = textCity.getText();
+                    state = textState.getText();
+                    zip = textZip.getText();
+
+                    finalSt.executeUpdate("UPDATE `data` SET `id`='" + id + "',`name`='" + name + "',`street`='"
+                    + street + "',`city`='" + city + "',`state`='" + state + "',`zip`='" + zip + "' WHERE id=" + currentId);
+
+                    rs=finalSt.executeQuery("SELECT * FROM data");
+
+                    if(rs.next()){
+                        id=rs.getInt("id");
+                        name = rs.getString("name");
+                        street = rs.getString("street");
+                        city = rs.getString("city");
+                        state = rs.getString("state");
+                        zip = rs.getString("zip");
+
+                        textId.setText(String.valueOf(id));
+                        textName.setText(name);
+                        textStreet.setText(street);
+                        textCity.setText(city);
+                        textState.setText(state);
+                        textZip.setText(zip);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
             }
         });
